@@ -6,13 +6,14 @@ using namespace std;
 
 // Help function
 void help() {
-  string help = "To chyper: write your text and press enter. Then input your shift value. This value must be positive.";
+  string help = "Usage: ceaser [OPTION] [TEXT] [KEY]";
   cout << help << endl;
-  help = "To decypher: write your cyphered text and press enter. Then input your shift value. This value must be negative.";
+  help = "\t-h --help\tdisplay this help text";
   cout << help << endl;
   return ;
 }
 
+// Interactive mode function
 void interactive() {
   while (true) {
     string text;
@@ -30,25 +31,35 @@ void interactive() {
       help();
       continue;
     }
-    cout << ">>>";
-    getline(cin, in_value, '\n');
-    value = atoi(in_value.c_str());
-    if (value > 0) {
-      result = caeser.cypher(text, value);
+    if (text == "break") {
+      cout << ">>>";
+      getline(cin, text, '\n');
+      result = caeser.crack(text);
+      cout << result;
     }
-    else if (value < 0) {
-      result = caeser.decypher(text, value);
+    else {
+      cout << ">>>";
+      getline(cin, in_value, '\n');
+      value = atoi(in_value.c_str());
+      if (value > 0) {
+        result = caeser.cypher(text, value);
+      }
+      else if (value < 0) {
+        result = caeser.decypher(text, value);
+      }
+      cout << result << endl;
     }
-    cout << result << endl;
   }
   return ;
 }
 
 int main (int argc, char *argv[]) {
+  // no arguments, interactive mode
   if (argc == 1) {
     interactive();
     exit(0);
   }
+  // one argument, help or present all possible decypherings
   else if (argc == 2) {
     string arg(argv[1]);
     if (arg == "--help" || arg == "-h") {
@@ -56,10 +67,13 @@ int main (int argc, char *argv[]) {
       exit(0);
     }
     else {
-      cerr << "Missing argument" << endl;
-      exit(1);
+      Caeser ceaser;
+      string result = ceaser.crack(arg);
+      cout << result;
+      exit(0);
     }
   }
+  // two arguments, cypher or decypher given text with given key
   else if (argc == 3) {
     string text(argv[1]);
     int value = atoi(argv[2]);
@@ -80,7 +94,6 @@ int main (int argc, char *argv[]) {
     cerr << "Too many arguments." << endl;
     exit (1);
   }
-
   return 0;
   exit (0);
 }
