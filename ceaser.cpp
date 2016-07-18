@@ -74,7 +74,7 @@ string Caeser::crack(string text) {
   string result;
   for (int i = 1; i < alphabet.length(); i++) {
     char attempt[(int) text.length()];
-    sprintf(attempt, "%d %s\n", i, decypher(text, -i).c_str());
+    sprintf(attempt, "%d\t%s\n", i, decypher(text, -i).c_str());
     string res(attempt);
     result+= res;
   }
