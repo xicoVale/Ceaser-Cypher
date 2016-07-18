@@ -6,9 +6,9 @@ using namespace std;
 
 // Help function
 void help() {
-  string help = "To chyper: write your text and press enter. Then input your shift value. This value must be positive.";
+  string help = "Usage: ceaser [OPTION] [TEXT] [KEY]";
   cout << help << endl;
-  help = "To decypher: write your cyphered text and press enter. Then input your shift value. This value must be negative.";
+  help = "\t-h --help\tdisplay this help text";
   cout << help << endl;
   return ;
 }
